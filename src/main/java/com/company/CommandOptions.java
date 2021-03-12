@@ -27,8 +27,11 @@ public class CommandOptions {
 
         this.method = valueOf("--method");
 
-        this.p = Float.parseFloat(valueOf("--p"));
-        this.r = Float.parseFloat(valueOf("--r"));
+        if (arguments.contains("--p")){
+            this.p = Float.parseFloat(valueOf("--p"));
+        } else {
+            this.r = Float.parseFloat(valueOf("--r"));
+        }
 
         this.min_x = Float.parseFloat(valueOf("--min-x"));
         this.min_y = Float.parseFloat(valueOf("--min-y"));
@@ -105,9 +108,9 @@ public class CommandOptions {
         String str;
 
         for ( int i = 0; i < arguments.size(); i++ ) {
-            str = (String)arguments.get(i);
+            str = (String) arguments.get(i);
             if (str.equalsIgnoreCase(option)) {
-                value = (String)arguments.get(i+1);
+                value = (String) arguments.get(i+1);
                 break;
             }
         }

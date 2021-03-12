@@ -1,9 +1,8 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import cn.jimmiez.pcu.common.graphics.Octree;
+
+import java.util.*;
 
 import javax.vecmath.Point3d;
 
@@ -62,9 +61,34 @@ public class Main {
         return (float) (1 / Math.pow(x.distance(xk), p));
     }
 
+    static float modifiedShepardsMethodWeight(Point3d x, Point3d xk, float r){
+        double distToPoint = x.distance(xk);
+        return (float) Math.pow((Math.max(0, r - distToPoint) / r * distToPoint), 2);
+    }
+
+    static float modifiedShepardsMethod(Point3d x, float r, List<Integer> neighbours){
+        double divident = 0;
+        double devisor = 0;
+
+        for (int i = 0; i < neighbours.size(); i++){
+            int xk_index = neighbours.get(i);
+            Point3d xk = points.get(i);
+            float yk = pointsFuncValues.get(i);
+            if (xk.equals(x)){
+                return yk;
+            }
+
+            float wk = modifiedShepardsMethodWeight(x, xk, r);
+            divident += wk * yk;
+            devisor += wk;
+        }
+
+        return (float) (divident / devisor);
+    }
+
+
     static void process(){
         if (method.equals("basic")) {
-            int i = 0;
             for (double z = min_z; z < max_z; z += Math.abs(min_z - max_z) / res_z){
                 for (double y = min_y; y < max_y; y += Math.abs(min_y - max_y) / res_y){
                     for (double x = min_x; x < max_x; x += Math.abs(min_x - max_x) / res_x){
@@ -72,6 +96,20 @@ public class Main {
                     }
                 }
             }
+        } else if(method.equals("modified")){
+            // Construct the octtree
+            Octree octree = new Octree();
+            octree.buildIndex(points);
+
+            for (double z = min_z; z < max_z; z += Math.abs(min_z - max_z) / res_z){
+                for (double y = min_y; y < max_y; y += Math.abs(min_y - max_y) / res_y){
+                    for (double x = min_x; x < max_x; x += Math.abs(min_x - max_x) / res_x){
+                        Point3d currentPoint = new Point3d(x, y, z);
+                        System.out.write((byte) modifiedShepardsMethod(currentPoint, r, octree.searchAllNeighborsWithinDistance(currentPoint, r)));
+                    }
+                }
+            }
+
         }
     }
 
