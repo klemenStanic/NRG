@@ -2,6 +2,8 @@ package com.company;
 
 import cn.jimmiez.pcu.common.graphics.Octree;
 
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.*;
 
 import javax.vecmath.Point3d;
@@ -38,7 +40,7 @@ public class Main {
 
     }
 
-    static float basicShepardsMethod(Point3d x, float p) {
+    static double basicShepardsMethod(Point3d x, float p) {
         double divident = 0;
         double devisor = 0;
 
@@ -49,41 +51,41 @@ public class Main {
                 return yk;
             }
 
-            float wk = basicShepardsMethodWeight(x, xk, p);
+            double wk = basicShepardsMethodWeight(x, xk, p);
             divident += wk * yk;
             devisor += wk;
         }
 
-        return (float) (divident / devisor);
+        return (divident / devisor);
     }
 
-    static float basicShepardsMethodWeight(Point3d x, Point3d xk, float p){
-        return (float) (1 / Math.pow(x.distance(xk), p));
+    static double basicShepardsMethodWeight(Point3d x, Point3d xk, float p){
+        return (1 / Math.pow(x.distance(xk), p));
     }
 
-    static float modifiedShepardsMethodWeight(Point3d x, Point3d xk, float r){
+    static double modifiedShepardsMethodWeight(Point3d x, Point3d xk, float r){
         double distToPoint = x.distance(xk);
-        return (float) Math.pow((Math.max(0, r - distToPoint) / r * distToPoint), 2);
+        return Math.pow((Math.max(0, r - distToPoint) / r * distToPoint), 2);
     }
 
-    static float modifiedShepardsMethod(Point3d x, float r, List<Integer> neighbours){
+    static double modifiedShepardsMethod(Point3d x, float r, List<Integer> neighbours){
         double divident = 0;
         double devisor = 0;
 
         for (int i = 0; i < neighbours.size(); i++){
             int xk_index = neighbours.get(i);
-            Point3d xk = points.get(i);
-            float yk = pointsFuncValues.get(i);
+            Point3d xk = points.get(xk_index);
+            float yk = pointsFuncValues.get(xk_index);
             if (xk.equals(x)){
                 return yk;
             }
 
-            float wk = modifiedShepardsMethodWeight(x, xk, r);
+            double wk = modifiedShepardsMethodWeight(x, xk, r);
+
             divident += wk * yk;
             devisor += wk;
         }
-
-        return (float) (divident / devisor);
+        return (divident / devisor);
     }
 
 
@@ -92,7 +94,15 @@ public class Main {
             for (double z = min_z; z < max_z; z += Math.abs(min_z - max_z) / res_z){
                 for (double y = min_y; y < max_y; y += Math.abs(min_y - max_y) / res_y){
                     for (double x = min_x; x < max_x; x += Math.abs(min_x - max_x) / res_x){
-                        System.out.write((byte) basicShepardsMethod(new Point3d(x, y, z), p));
+                        float f = (float) basicShepardsMethod(new Point3d(x, y, z), p);
+                        byte[] buff = ByteBuffer.allocate(4).putFloat(f).array();
+                        try {
+                            System.out.write(buff);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        //System.out.write( (byte[]) (float) basicShepardsMethod(new Point3d(x, y, z), p));
+                        //System.out.println((float) basicShepardsMethod(new Point3d(x, y, z), p));
                     }
                 }
             }
@@ -105,7 +115,16 @@ public class Main {
                 for (double y = min_y; y < max_y; y += Math.abs(min_y - max_y) / res_y){
                     for (double x = min_x; x < max_x; x += Math.abs(min_x - max_x) / res_x){
                         Point3d currentPoint = new Point3d(x, y, z);
-                        System.out.write((byte) modifiedShepardsMethod(currentPoint, r, octree.searchAllNeighborsWithinDistance(currentPoint, r)));
+                        float f = (float) modifiedShepardsMethod(currentPoint, r, octree.searchAllNeighborsWithinDistance(currentPoint, r));
+                        byte[] buff = ByteBuffer.allocate(4).putFloat(f).array();
+                        try {
+                            System.out.write(buff);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        //System.out.write((byte) (float) modifiedShepardsMethod(currentPoint, r, octree.searchAllNeighborsWithinDistance(currentPoint, r)));
+                        //System.out.print( (float) modifiedShepardsMethod(currentPoint, r, octree.searchAllNeighborsWithinDistance(currentPoint, r)));
                     }
                 }
             }
