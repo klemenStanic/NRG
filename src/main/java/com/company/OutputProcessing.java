@@ -1,5 +1,8 @@
 package com.company;
 
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
@@ -23,28 +26,41 @@ public class OutputProcessing {
             bb.clear();
         }
 
-
         float[] out = remap(floats);
-        for (int i = 0; i < out.length; i++){
-            byte b = (byte) (int) out[i];
-            System.out.write(b);
-        }
+        try {
+            DataOutputStream dos = new DataOutputStream(new FileOutputStream("output/output_uint8.raw"));
+            for (int i = 0; i < out.length; i++){
+                int integer = (int) out[i];
+                dos.writeByte(integer);
 
+                //System.out.println(long_);
+                //System.out.write( (byte) (long_ & 0xFF));
+                //System.out.write(((byte) integer) & 0xFF);
+                //System.out.println((int) out[i]);
+                //byte b = (byte) (int) out[i];
+                //System.out.write((byte) integer & 0xFF);
+            }
+            dos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
     }
 
     public static float[] remap(float[] floats){
         float[] out = new float[floats.length];
-        float a = 0;
-        float b = 1;
+        float a = getMin(floats);
+        float b = getMax(floats);
         int c = 0;
         int d = 255;
 
         for (int i = 0; i < floats.length; i++){
             if (floats[i] <= 0){
                 out[i] = 0;
-            } else if (floats[i] >= 1){
+            } else if (floats[i] >= 2){
                 out[i] = 255;
             } else {
                 out[i] = (floats[i] - a) * ((d - c) / (b - a)) + c;
