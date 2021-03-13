@@ -33,8 +33,8 @@ On the input file with 1k points, 256 res, with the "basic" method, p parameter 
 ```
 
 ## Results visualization in VPT:
-1k points, parameters: --method modified --r 0.5 --min-x -4.1 --min-y -3.45 --min-z -3.76 --max-x 4.0 --max-y 3.91 --max-z 3.73 --res-x 256 --res-y 256 --res-z 256
+10k points, parameters: --method modified --r 0.5 --min-x -4.1 --min-y -3.45 --min-z -3.76 --max-x 4.0 --max-y 3.91 --max-z 3.73 --res-x 256 --res-y 256 --res-z 256
 ![1k_256](./images/10k_256.png)
 
 1k points, parameters: --method basic --p 10 --min-x -4.1 --min-y -3.45 --min-z -3.76 --max-x 4.0 --max-y 3.91 --max-z 3.73 --res-x 256 --res-y 256 --res-z 256
-![10k_256](./images/output_1k_256_basic_p_10.png)
+![1k_256](./images/output_1k_256_basic_p_10.png)
