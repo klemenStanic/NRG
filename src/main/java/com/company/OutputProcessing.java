@@ -13,6 +13,7 @@ import java.util.Collections;
 public class OutputProcessing {
     public static void main(String[] args) {
         String inputFileName = args[0];
+        String outputFileName = args[1];
         byte[] fileContents = readFile(inputFileName);
         float[] floats = new float[fileContents.length / 4];
 
@@ -28,7 +29,7 @@ public class OutputProcessing {
 
         float[] out = remap(floats);
         try {
-            DataOutputStream dos = new DataOutputStream(new FileOutputStream("output/output_uint8.raw"));
+            DataOutputStream dos = new DataOutputStream(new FileOutputStream(outputFileName));
             for (int i = 0; i < out.length; i++){
                 int integer = (int) out[i];
                 dos.writeByte(integer);
