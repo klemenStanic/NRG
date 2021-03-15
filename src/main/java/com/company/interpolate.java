@@ -8,7 +8,7 @@ import java.util.*;
 
 import javax.vecmath.Point3d;
 
-public class Main {
+public class interpolate {
 
     static String method;
     static float p;
