@@ -5,16 +5,16 @@ This repository contains the solution to the second homework of the Advanced Com
 SPP 10, 20 bounces, no path reuse speedup, no russian roulette, Oren-Nayar materials applied (blue ball - sigma 70, yellow ball -sigma 40, walls Lambertian material)\
 ![first](results/SPP10_no_path_reuse_no_russian.JPG)
 
-SPP 10, 20 bounces, **with** path reuse speedup, no russian roulette, Oren-Nayar materials applied (blue ball - sigma 70, yellow ball -sigma 40, walls Lambertian material)
+SPP 10, 20 bounces, **with** path reuse speedup, no russian roulette, Oren-Nayar materials applied (blue ball - sigma 70, yellow ball -sigma 40, walls Lambertian material)\
 ![second](results/SPP10_with_path_reuse_no_russian.JPG)
 
-SPP 10, 20 bounces, **with** path reuse speedup, **with** russian roulette, Oren-Nayar materials applied (blue ball - sigma 70, yellow ball -sigma 40, walls Lambertian material)
-![third](results/SPP10_with_path_reuse_with_russian.JPG)
+SPP 10, 20 bounces, **with** path reuse speedup, **with** russian roulette, Oren-Nayar materials applied (blue ball - sigma 70, yellow ball -sigma 40, walls Lambertian material)\
+![third](results/SPP10_with_path_with_russian.JPG)
 
-Light emission inside (acting as a spatial light), SPP 10, **with** path reuse speedup, **with** russian roulette, Lambertian materials applied
+Light emission inside (acting as a spatial light), SPP 10, **with** path reuse speedup, **with** russian roulette, Lambertian materials applied\
 ![forth](results/SPP_120_spatial.JPG)
 
-Beauty shot, SPP 100, 20 bounces, all the speedups, all materials OrenNayar
+Beauty shot, SPP 100, 20 bounces, all the speedups, all materials OrenNayar\
 ![fifth](results/long.JPG)
 
 
