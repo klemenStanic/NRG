@@ -2,7 +2,7 @@
 This repository contains the solution to the second homework of the Advanced Computer graphics masters course.
 
 ## Results: 
-SPP 10, 20 bounces, no path reuse speedup, no russian roulette, Oren-Nayar materials applied (blue ball - sigma 70, yellow ball -sigma 40, walls Lambertian material)
+SPP 10, 20 bounces, no path reuse speedup, no russian roulette, Oren-Nayar materials applied (blue ball - sigma 70, yellow ball -sigma 40, walls Lambertian material)\
 ![first](results/SPP10_no_path_reuse_no_russian.JPG)
 
 SPP 10, 20 bounces, **with** path reuse speedup, no russian roulette, Oren-Nayar materials applied (blue ball - sigma 70, yellow ball -sigma 40, walls Lambertian material)
